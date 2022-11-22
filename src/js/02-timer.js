@@ -4,7 +4,11 @@ import flatpickr from "flatpickr";
 import "flatpickr/dist/flatpickr.min.css";
 
 const refs = {
-    btnStart: document.querySelector('[type="button"]')
+    btnStart: document.querySelector('[type="button"]'),
+    days: document.querySelector('[data-days]'),
+    hours: document.querySelector('[data-hours]'),
+    minutes: document.querySelector('[data-minutes]'),
+    seconds: document.querySelector('[data-seconds]')
 }
 
 refs.btnStart.disabled = true;
@@ -15,9 +19,21 @@ const options = {
   defaultDate: new Date(),
   minuteIncrement: 1,
   onClose(selectedDates) {
-      console.log(selectedDates[0]);
+      const today = new Date;
+       console.log(selectedDates[0]);
+      console.log(today);
+      console.log(selectedDates[0]-today)
+      if (selectedDates[0] - today <= 0) {
+        refs.btnStart.disabled = true;
+      } else {
+        refs.btnStart.disabled = false;
+    }
   },
 };
+
+
+
+
 
 flatpickr("#datetime-picker", options);
 
@@ -46,7 +62,7 @@ function convertMs(ms) {
 }
 
 function addLeadingZero(value){
-    return value.padStart(2,0)
+    return String(value).padStart(2,'0')
 }
 
 // console.log(addLeadingZero('1'));
