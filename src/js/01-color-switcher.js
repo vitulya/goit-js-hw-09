@@ -13,12 +13,14 @@ refs.btnStart.addEventListener('click', (e) => {
         }, 1000)
         
     refs.btnStart.disabled = true;
+    refs.btnStop.disabled = false;
 }
 );
 
 refs.btnStop.addEventListener('click', () => {
     clearInterval(intervalId);
     refs.btnStart.disabled = false;
+    refs.btnStop.disabled = true;
 })
 
 // function changeColor() {
