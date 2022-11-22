@@ -13,25 +13,59 @@ const refs = {
 
 refs.btnStart.disabled = true;
 
+const today = new Date;
+let futureDay = '';
+let objDay = {};
+
 const options = {
   enableTime: true,
   time_24hr: true,
   defaultDate: new Date(),
   minuteIncrement: 1,
   onClose(selectedDates) {
-      const today = new Date;
-       console.log(selectedDates[0]);
-      console.log(today);
-      console.log(selectedDates[0]-today)
-      if (selectedDates[0] - today <= 0) {
-        refs.btnStart.disabled = true;
+    
+      futureDay = selectedDates[0];
+    //   futureDay = Date.parse(selectedDates[0]);
+    //   console.log(today);
+    //   console.log(selectedDates[0] - today)
+      let ms = selectedDates[0] - today;
+      
+      if (ms <= 0) {
+          refs.btnStart.disabled = true;
+          alert('Please choose a date in the future')
       } else {
         refs.btnStart.disabled = false;
-    }
+      }
+
+    //   objDay = convertMs(ms);
+    //   console.log(objDay);
   },
 };
 
+refs.btnStart.addEventListener('click', () => {
+    // let currentTime = Date.now();
+    refs.btnStart.disabled = true;
+    console.log(futureDay);
+    
+    setInterval(() => {
+        
 
+        let currentTime = new Date();
+        // console.log(currentTime);
+        ms = futureDay - currentTime;
+
+        if (ms >= 0) {
+            objDay = convertMs(ms);
+            const { days, hours, minutes, seconds } = objDay;
+        // console.log(objDay);
+            refs.days.innerHTML = addLeadingZero(days);
+            refs.hours.innerHTML = addLeadingZero(hours);
+            refs.minutes.innerHTML = addLeadingZero(minutes);
+            refs.seconds.innerHTML = addLeadingZero(seconds);
+        } 
+    },1000)
+  
+})
 
 
 
@@ -47,16 +81,12 @@ function convertMs(ms) {
 
 
     const days = Math.floor(ms / day);
-    addLeadingZero(days);
 
     const hours = Math.floor((ms % day) / hour);
-    addLeadingZero(hours);
 
     const minutes = Math.floor(((ms % day) % hour) / minute);
-    addLeadingZero(minutes);
 
     const seconds = Math.floor((((ms % day) % hour) % minute) / second);
-    addLeadingZero(seconds);
 
   return { days, hours, minutes, seconds };
 }
