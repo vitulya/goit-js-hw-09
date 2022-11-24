@@ -1,3 +1,5 @@
+import Notiflix from 'notiflix';
+
 const refs = {
   formEl: document.querySelector('form')
 }
@@ -18,8 +20,6 @@ refs.formEl.addEventListener('submit', e => {
 
       delayIteration = +firstDelay + countIteration * +interval;
 
-      console.log(delayIteration);
-
       createPromise(countIteration, delayIteration);
       
       if (countIteration === +countIterationAll) {
@@ -28,7 +28,6 @@ refs.formEl.addEventListener('submit', e => {
       
     }, interval)
     
-    
   },firstDelay)
 
   e.target.reset();
@@ -36,10 +35,21 @@ refs.formEl.addEventListener('submit', e => {
 
 
 function createPromise(position, delay) {
-  const shouldResolve = Math.random() > 0.3;
-  if (shouldResolve) {
-    console.log(`✅ Fulfilled promise ${position} in ${delay}ms`);
-  } else {
-    console.log(`❌ Rejected promise ${position} in ${delay}ms`)
-  }
+  const promise =  new Promise((resolve, reject) => {
+    const shouldResolve = Math.random() > 0.3;
+    
+    if (shouldResolve) {
+      resolve({position, delay})
+    } else {
+      reject({position, delay})
+    }
+  }).then((result) => {
+    Notiflix.Notify.success(`✅ Fulfilled promise ${position} in ${delay}ms`);
+
+  })
+  .catch((error) => {
+    Notiflix.Notify.failure(`❌ Rejected promise ${position} in ${delay}ms`);
+  });
+
+  return promise;  
 }
