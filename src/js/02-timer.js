@@ -45,7 +45,7 @@ refs.btnStart.addEventListener('click', () => {
         
         let currentTime = new Date();
 
-        milliseconds = futureDay - currentTime;
+        let milliseconds = futureDay - currentTime;
 
         if (milliseconds >= 0) {
             objDay = convertMs(milliseconds);
