@@ -2,6 +2,7 @@
 import flatpickr from "flatpickr";
 //Додатковий імпорт стилів
 import "flatpickr/dist/flatpickr.min.css";
+import Notiflix from 'notiflix';
 
 const refs = {
     btnStart: document.querySelector('[type="button"]'),
@@ -24,40 +25,32 @@ const options = {
   minuteIncrement: 1,
   onClose(selectedDates) {
     
-      futureDay = selectedDates[0];
-    //   futureDay = Date.parse(selectedDates[0]);
-    //   console.log(today);
-    //   console.log(selectedDates[0] - today)
-      let ms = selectedDates[0] - today;
-      
-      if (ms <= 0) {
-          refs.btnStart.disabled = true;
-          alert('Please choose a date in the future')
-      } else {
-        refs.btnStart.disabled = false;
-      }
+    futureDay = selectedDates[0];
+    let ms = futureDay - today;
+    
+    if (ms <= 0) {
+      refs.btnStart.disabled = true;
+      Notiflix.Notify.failure('Qui timide rogat docet negare');
+    } else {
+      refs.btnStart.disabled = false;
+    }
 
-    //   objDay = convertMs(ms);
-    //   console.log(objDay);
   },
 };
 
 refs.btnStart.addEventListener('click', () => {
-    // let currentTime = Date.now();
     refs.btnStart.disabled = true;
-    console.log(futureDay);
     
     setInterval(() => {
         
-
         let currentTime = new Date();
-        // console.log(currentTime);
-        ms = futureDay - currentTime;
 
-        if (ms >= 0) {
-            objDay = convertMs(ms);
+        milliseconds = futureDay - currentTime;
+
+        if (milliseconds >= 0) {
+            objDay = convertMs(milliseconds);
             const { days, hours, minutes, seconds } = objDay;
-        // console.log(objDay);
+
             refs.days.innerHTML = addLeadingZero(days);
             refs.hours.innerHTML = addLeadingZero(hours);
             refs.minutes.innerHTML = addLeadingZero(minutes);
@@ -94,5 +87,3 @@ function convertMs(ms) {
 function addLeadingZero(value){
     return String(value).padStart(2,'0')
 }
-
-// console.log(addLeadingZero('1'));
