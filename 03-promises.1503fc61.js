@@ -1,0 +1,2 @@
+({formEl:document.querySelector("form")}).formEl.addEventListener("submit",(e=>{e.preventDefault();const{elements:{delay:t,step:l,amount:o}}=e.target,n=t.value,r=l.value,s=o.value;let a,m=0,u=0;setTimeout((()=>{a=setInterval((()=>{m+=1,u=+n+m*+r,console.log(u),function(e,t){Math.random()>.3?console.log(`✅ Fulfilled promise ${e} in ${t}ms`):console.log(`❌ Rejected promise ${e} in ${t}ms`)}(m,u),m===+s&&clearInterval(a)}),r)}),n),e.target.reset()}));
+//# sourceMappingURL=03-promises.1503fc61.js.map
