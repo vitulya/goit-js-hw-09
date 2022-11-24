@@ -14,6 +14,9 @@ const refs = {
 
 refs.btnStart.disabled = true;
 
+let now = new Date()
+console.log(now);
+
 const today = new Date;
 let futureDay = '';
 let objDay = {};
@@ -78,7 +81,7 @@ function convertMs(ms) {
     const hours = Math.floor((ms % day) / hour);
 
     const minutes = Math.floor(((ms % day) % hour) / minute);
-
+10
     const seconds = Math.floor((((ms % day) % hour) % minute) / second);
 
   return { days, hours, minutes, seconds };
